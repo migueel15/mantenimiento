@@ -1,4 +1,5 @@
 .settings
+bin
 .idea/
 target/
 pom.xml.tag
