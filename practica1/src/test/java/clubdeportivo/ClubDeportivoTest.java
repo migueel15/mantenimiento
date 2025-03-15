@@ -35,8 +35,8 @@ public class ClubDeportivoTest {
 		assertThrows(ClubException.class, () -> clubDeportivo.anyadirActividad(grupoNulo));
 	}
 
-	@Test
-	public void anyadir
+	// @Test
+	// public void anyadir
 
 	//
 	// PLAZAS LIBRES
