@@ -31,7 +31,6 @@ public class ClubDeportivoAltoRendimientoTest {
             clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento("clubDeportivoAltoRendimiento", 10, -10.0);
         });
     }
-    @Test
 
 
 
