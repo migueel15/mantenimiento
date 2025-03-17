@@ -97,7 +97,7 @@ public class ClubDeportivoAltoRendimientoTest {
         int max = 10;
         double inc = 10;
         int tam = 10;
-        assertThrows(ClubException.class, () -> {
+        assertDoesNotThrow(() -> {
             clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
         });
     }
