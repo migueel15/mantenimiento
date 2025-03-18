@@ -1,3 +1,6 @@
+// Salma Boulagna Moreno
+// Miguel Ángel Dorado Maldonado
+
 package clubdeportivo;
 
 import org.junit.jupiter.api.*;

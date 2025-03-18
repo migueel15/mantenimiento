@@ -1,3 +1,6 @@
+// Salma Boulagna Moreno
+// Miguel Ángel Dorado Maldonado
+
 package clubdeportivo;
 
 import org.junit.jupiter.api.*;
@@ -5,18 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ClubDeportivoAltoRendimientoTest {
 	ClubDeportivoAltoRendimiento clubDeportivoAltoRendimiento;
-
-	/*
-	 * @BeforeEach
-	 * public void initTest{
-	 * try {
-	 * clubDeportivoAltoRendimiento = new
-	 * ClubDeportivoAltoRendimiento("Club Deportivo Alto Rendimiento 1", 10, 10.0);
-	 * } catch (ClubException e) {
-	 * throw new RuntimeException(e);
-	 * }
-	 * }
-	 */
 
 	@Test
 	public void anyadirActividad_test() throws ClubException {
@@ -70,7 +61,6 @@ public class ClubDeportivoAltoRendimientoTest {
 		});
 	}
 
-	// redundante??
 	@Test
 	public void ClubDeportivoAltoRendimientoOKValuesNoReturnException() {
 		String nombre = "clubDeportivoAltoRendimiento";
