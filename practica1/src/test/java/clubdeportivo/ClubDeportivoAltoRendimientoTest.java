@@ -101,8 +101,46 @@ public class ClubDeportivoAltoRendimientoTest {
             clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
         });
     }
-    //TENGO QUE HACER LOS TEST DE MAXIMO E INCREMENTO SI YA ESTAN?
-
+    @Test
+    public void ClubDeportivoAltoRendimientoWTamMaxNegativeNoReturnException() throws ClubException{
+        String nombre = "clubDeportivoAltoRendimiento";
+        int max = -10;
+        double inc = 10;
+        int tam = 10;
+        assertDoesNotThrow(() -> {
+            clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
+        });
+    }
+    @Test
+    public void ClubDeportivoAltoRendimientoWTamMaxZeroNoReturnException() throws ClubException{
+        String nombre = "clubDeportivoAltoRendimiento";
+        int max = 0;
+        double inc = 10;
+        int tam = 10;
+        assertDoesNotThrow(() -> {
+            clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
+        });
+    }
+    @Test
+    public void ClubDeportivoAltoRendimientoWTamIncNegativeNoReturnException() throws ClubException{
+        String nombre = "clubDeportivoAltoRendimiento";
+        int max = -10;
+        double inc = -10;
+        int tam = 10;
+        assertDoesNotThrow(() -> {
+            clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
+        });
+    }
+    @Test
+    public void ClubDeportivoAltoRendimientoWTamIncZeroNoReturnException() throws ClubException{
+        String nombre = "clubDeportivoAltoRendimiento";
+        int max = -10;
+        double inc = 0;
+        int tam = 10;
+        assertDoesNotThrow(() -> {
+            clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
+        });
+    }
     @Test
     public void anyadirActividadLessRangeExpectException() throws ClubException {
         clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento("clubDeportivoAltoRendimiento", 10, 10.0);
@@ -111,7 +149,19 @@ public class ClubDeportivoAltoRendimientoTest {
             clubDeportivoAltoRendimiento.anyadirActividad(datos);
         });
     }
-    //redundante??
+    @Test
+    public void anyadirActividadWrongNumberFormatExpectException() throws ClubException {
+        clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento("clubDeportivoAltoRendimiento", 10, 10.0);
+        String codigo = "abc";
+        String actividad = "Actividad 1";
+        String plazas = "wrong format";
+        int matriculados = 2;
+        double tarifa = 10.0;
+        String[] datos = { codigo, actividad, plazas, Integer.toString(matriculados), Double.toString(tarifa) };
+        assertThrows(ClubException.class, () -> {
+            clubDeportivoAltoRendimiento.anyadirActividad(datos);
+        });
+    }
     @Test
     public void anyadirActividadOKRangeNoExpectException() throws ClubException {
         clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento("clubDeportivoAltoRendimiento", 10, 10.0);
