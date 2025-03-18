@@ -245,6 +245,13 @@ public class GrupoTest {
 	}
 
 	@Test
+	public void equalsDifferentObjectTypesExpectFalse() {
+		Object o = new Object();
+		boolean result = grupo.equals(o);
+		assertFalse(result);
+	}
+
+	@Test
 	public void hashCodeExpectHashCode() throws ClubException {
 		Grupo g = new Grupo("1235", "Padel", 20, 10, 22.0);
 		int hashg1 = grupo.hashCode();
