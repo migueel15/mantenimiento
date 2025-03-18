@@ -107,7 +107,7 @@ public class ClubDeportivoAltoRendimientoTest {
         int max = -10;
         double inc = 10;
         int tam = 10;
-        assertDoesNotThrow(() -> {
+        assertThrows(ClubException.class, () -> {
             clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
         });
     }
@@ -117,7 +117,7 @@ public class ClubDeportivoAltoRendimientoTest {
         int max = 0;
         double inc = 10;
         int tam = 10;
-        assertDoesNotThrow(() -> {
+        assertThrows(ClubException.class, () -> {
             clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
         });
     }
@@ -127,7 +127,7 @@ public class ClubDeportivoAltoRendimientoTest {
         int max = -10;
         double inc = -10;
         int tam = 10;
-        assertDoesNotThrow(() -> {
+        assertThrows(ClubException.class, () -> {
             clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
         });
     }
@@ -137,7 +137,7 @@ public class ClubDeportivoAltoRendimientoTest {
         int max = -10;
         double inc = 0;
         int tam = 10;
-        assertDoesNotThrow(() -> {
+        assertThrows(ClubException.class, () -> {
             clubDeportivoAltoRendimiento = new ClubDeportivoAltoRendimiento(nombre, tam, max, inc);
         });
     }
