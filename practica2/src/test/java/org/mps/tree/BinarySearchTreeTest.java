@@ -13,4 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class BinarySearchTreeTest {
 
+	@Test
+	public void testPrueba() {
+		assertTrue(true);
+	}
+
 }
