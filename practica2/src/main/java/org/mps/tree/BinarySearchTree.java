@@ -121,13 +121,13 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
 	@Override
 	public void removeBranch(T value) {
 		if (this.value != null) {
-			if (comparator.compare(value, this.left.value) == 0) {
+			if (left != null && comparator.compare(value, this.left.value) == 0) {
 				this.left = null;
-			} else if (comparator.compare(value, this.right.value) == 0) {
+			} else if (right != null && comparator.compare(value, this.right.value) == 0) {
 				this.right = null;
-			} else if (comparator.compare(value, this.left.value) < 0) {
+			} else if (left != null && comparator.compare(value, this.left.value) < 0) {
 				this.left.removeBranch(value);
-			} else {
+			} else if (right != null && comparator.compare(value, this.right.value) > 0) {
 				this.right.removeBranch(value);
 			}
 		}
