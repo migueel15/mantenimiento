@@ -1,5 +1,7 @@
-**/**
-
-!practica*
-!**/src/**/**
-!**/pom.xml
+**/.idea
+**/.vscode
+**/target
+**/.classpath
+**/.project
+**/.settings
+**/.DS_Store
