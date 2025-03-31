@@ -48,6 +48,56 @@ class BinarySearchTreeTest {
       assertThrows(BinarySearchTreeException.class, () -> tree.insert(10));
     }
   }
+  @Nested
+  @DisplayName("Leaf Tests")
+  class LeafTests {
+    private BinarySearchTree<Integer> tree;
+
+    @BeforeEach
+    void setUp() {
+      tree = new BinarySearchTree<Integer>(Comparator.naturalOrder());
+    }
+
+    @Test
+    @DisplayName("Calling isLeaf on an empty tree throws exception")
+    void isLeafOnEmptyTreeThrowsException() {
+      assertThrows(BinarySearchTreeException.class, () -> tree.isLeaf());
+    }
+
+    @Test
+    @DisplayName("Leaf node returns true")
+    void isLeafReturnsTrueForLeafNode() throws BinarySearchTreeException {
+      tree.insert(10);
+      assertTrue(tree.isLeaf());
+    }
+
+    @Test
+    @DisplayName("Node with left child returns false")
+    void isLeafReturnsFalseForNodeWithLeftChild() throws BinarySearchTreeException {
+      tree.insert(10);
+      tree.insert(5);
+      assertFalse(tree.isLeaf());
+    }
+
+    @Test
+    @DisplayName("Node with right child returns false")
+    void isLeafReturnsFalseForNodeWithRightChild() throws BinarySearchTreeException {
+      tree.insert(10);
+      tree.insert(15);
+      assertFalse(tree.isLeaf());
+    }
+
+    @Test
+    @DisplayName("Node with two children returns false")
+    void isLeafReturnsFalseForNodeWithTwoChildren() throws BinarySearchTreeException {
+      tree.insert(10);
+      tree.insert(5);
+      tree.insert(15);
+      assertFalse(tree.isLeaf());
+    }
+  }
+
+
 
   @Nested
   @DisplayName("Search and Contains Tests")
