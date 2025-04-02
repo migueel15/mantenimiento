@@ -1,3 +1,5 @@
+// Salma Boulagna Moreno
+// Miguel Angel Dorado Maldonado
 package org.mps.tree;
 
 import java.util.Comparator;
@@ -197,7 +199,6 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
         parent = current;
         current = current.right;
       } else {
-        // Caso 1: Nodo hoja
         if (current.left == null && current.right == null) {
           if (parent == null) {
             this.value = null;
@@ -208,9 +209,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
           } else {
             parent.right = null;
           }
-        }
-        // Caso 2: Nodo con un solo hijo
-        else if (current.left == null) {
+        } else if (current.left == null) {
           if (parent == null) {
             this.value = current.right.value;
             this.left = current.right.left;
@@ -230,9 +229,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
           } else {
             parent.right = current.left;
           }
-        }
-        // Caso 3: Nodo con dos hijos
-        else {
+        } else {
           BinarySearchTree<T> successorParent = current;
           BinarySearchTree<T> successor = current.right;
           while (successor.left != null) {
