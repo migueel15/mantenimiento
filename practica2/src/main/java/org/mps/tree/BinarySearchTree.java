@@ -178,36 +178,51 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
 
   @Override
   public void removeValue(T value) throws BinarySearchTreeException {
-    if (!this.contains(value)) {
-      throw new BinarySearchTreeException("No se encuentra el valor a eliminar");
+    if (this.value == null) {
+      throw new BinarySearchTreeException("Árbol vacío");
+    }
+    if(!this.contains(value)) {
+      throw new BinarySearchTreeException("Valor nulo");
     }
 
-    if (this.value != null) {
-      if (comparator.compare(value, this.value) == 0) {
-        if (left == null && right == null) {
-          this.value = null;
-        } else if (left == null) {
-          this.value = right.value;
-          this.right = right.right;
-        } else if (right == null) {
-          this.value = left.value;
-          this.left = left.left;
-        } else {
-          T minValue = right.minimum();
-          this.value = minValue;
-          right.removeValue(minValue);
-        }
-      } else if (comparator.compare(value, this.value) < 0) {
-        if (left != null) {
-          left.removeValue(value);
-        }
-      } else {
-        if (right != null) {
-          right.removeValue(value);
-        }
+    int comparator = this.comparator.compare(value, this.value);
+    if (comparator == 0) {
+
+      if (this.left == null && this.right == null) {
+        this.value = null;
+      }
+      else if (this.left == null) {
+        this.value = this.right.value;
+        this.left = this.right.left;
+        this.right = this.right.right;
+      } else if (this.right == null) {
+        this.value = this.left.value;
+        this.right = this.left.right;
+        this.left = this.left.left;
+      }
+      else {
+        T minRightSubtree = this.right.minimum();
+        this.value = minRightSubtree;
+        this.right.removeValue(minRightSubtree);
       }
     }
+    if (comparator < 0 && this.left != null) {
+
+      BinarySearchTree<T> i = this.left;
+      if (this.left.comparator.compare(this.left.value, value) == 0) {
+        this.left = null;
+      }
+      i.removeValue(value);
+    } else if (comparator > 0 && this.right != null) {
+      BinarySearchTree<T> i = this.right;
+
+      if (this.right.comparator.compare(this.right.value, value) == 0) {
+        this.right = null;
+      }
+      i.removeValue(value);
+    }
   }
+
 
   @Override
   public List<T> inOrder() {
