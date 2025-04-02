@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 @DisplayName("BinarySearchTree Tests")
@@ -249,6 +251,12 @@ class BinarySearchTreeTest {
   class RemoveBranchTests {
 
     @Test
+    @DisplayName("Remove branch with value null")
+    void removeBranchWithValueNullThrowsException() {
+      assertThrows(BinarySearchTreeException.class, () -> tree.removeBranch(null)); // Valor nulo
+    }
+
+    @Test
     @DisplayName("Remove non-existent value throws exception")
     void removeNonExistentValueThrowsException() {
       tree.insert(10);
@@ -259,48 +267,49 @@ class BinarySearchTreeTest {
     @DisplayName("Remove node with only left child")
     void removeNodeWithLeftChildExpectedCorrectTree() throws BinarySearchTreeException {
       tree.insert(10);
-      tree.insert(5);  // Nodo izquierdo
-      tree.removeBranch(5);  // Eliminar el hijo izquierdo
-      assertEquals("10", tree.render());  // Solo debe quedar el nodo raíz (10)
+      tree.insert(5); // Nodo izquierdo
+      tree.removeBranch(5); // Eliminar el hijo izquierdo
+      assertEquals("10", tree.render()); // Solo debe quedar el nodo raíz (10)
     }
 
     @Test
     @DisplayName("Remove node with only right child")
     void removeNodeWithRightChildExpectedCorrectTree() throws BinarySearchTreeException {
       tree.insert(10);
-      tree.insert(15);  // Nodo derecho
-      tree.removeBranch(15);  // Eliminar el hijo derecho
-      assertEquals("10", tree.render());  // Solo debe quedar el nodo raíz (10)
+      tree.insert(15); // Nodo derecho
+      tree.removeBranch(15); // Eliminar el hijo derecho
+      assertEquals("10", tree.render()); // Solo debe quedar el nodo raíz (10)
     }
 
     @Test
     @DisplayName("Remove node with both left and right children")
     void removeNodeWithBothChildrenExpectedCorrectTree() throws BinarySearchTreeException {
       tree.insert(10);
-      tree.insert(5);   // Nodo izquierdo
-      tree.insert(15);  // Nodo derecho
-      tree.removeBranch(5);  // Eliminar el hijo izquierdo
-      assertEquals("10(,15)", tree.render());  // El subárbol izquierdo debe desaparecer, solo debe quedar el nodo raíz y el hijo derecho (15)
+      tree.insert(5); // Nodo izquierdo
+      tree.insert(15); // Nodo derecho
+      tree.removeBranch(5); // Eliminar el hijo izquierdo
+      assertEquals("10(,15)", tree.render()); // El subárbol izquierdo debe desaparecer, solo debe quedar el nodo raíz y
+                                              // el hijo derecho (15)
     }
 
     @Test
     @DisplayName("Recursively remove value in left subtree")
     void removeInLeftSubtree() throws BinarySearchTreeException {
       tree.insert(10);
-      tree.insert(5);  // Nodo izquierdo
-      tree.insert(3);  // Nodo izquierdo de 5
-      tree.removeBranch(3);  // Eliminar el valor en el subárbol izquierdo
-      assertEquals("10(5,)", tree.render());  // El valor 3 debe ser eliminado, y el árbol debe ser correcto
+      tree.insert(5); // Nodo izquierdo
+      tree.insert(3); // Nodo izquierdo de 5
+      tree.removeBranch(3); // Eliminar el valor en el subárbol izquierdo
+      assertEquals("10(5,)", tree.render()); // El valor 3 debe ser eliminado, y el árbol debe ser correcto
     }
 
     @Test
     @DisplayName("Recursively remove value in right subtree")
     void removeInRightSubtree() throws BinarySearchTreeException {
       tree.insert(10);
-      tree.insert(15);  // Nodo derecho
-      tree.insert(20);  // Nodo derecho de 15
-      tree.removeBranch(20);  // Eliminar el valor en el subárbol derecho
-      assertEquals("10(,15)", tree.render());  // El valor 20 debe ser eliminado, y el árbol debe ser correcto
+      tree.insert(15); // Nodo derecho
+      tree.insert(20); // Nodo derecho de 15
+      tree.removeBranch(20); // Eliminar el valor en el subárbol derecho
+      assertEquals("10(,15)", tree.render()); // El valor 20 debe ser eliminado, y el árbol debe ser correcto
     }
   }
 
@@ -328,8 +337,8 @@ class BinarySearchTreeTest {
     void sizeOfTreeWithBothChildrenExpected3() throws BinarySearchTreeException {
       // Árbol con raíz, hijo izquierdo y derecho, debe devolver 3
       tree.insert(10);
-      tree.insert(5);   // Hijo izquierdo
-      tree.insert(15);  // Hijo derecho
+      tree.insert(5); // Hijo izquierdo
+      tree.insert(15); // Hijo derecho
       assertEquals(3, tree.size());
     }
 
@@ -338,7 +347,7 @@ class BinarySearchTreeTest {
     void sizeOfTreeWithLeftSubtreeExpected2() throws BinarySearchTreeException {
       // Árbol con un nodo raíz y un hijo izquierdo, debe devolver 2
       tree.insert(10);
-      tree.insert(5);  // Hijo izquierdo
+      tree.insert(5); // Hijo izquierdo
       assertEquals(2, tree.size());
     }
 
@@ -347,7 +356,7 @@ class BinarySearchTreeTest {
     void sizeOfTreeWithRightSubtreeExpected2() throws BinarySearchTreeException {
       // Árbol con un nodo raíz y un hijo derecho, debe devolver 2
       tree.insert(10);
-      tree.insert(15);  // Hijo derecho
+      tree.insert(15); // Hijo derecho
       assertEquals(2, tree.size());
     }
 
@@ -356,12 +365,12 @@ class BinarySearchTreeTest {
     void sizeOfLargeTreeExpected7() throws BinarySearchTreeException {
       // Árbol con varios nodos distribuidos entre ambos subárboles, debe devolver 7
       tree.insert(10);
-      tree.insert(5);   // Hijo izquierdo
-      tree.insert(15);  // Hijo derecho
-      tree.insert(3);   // Subárbol izquierdo de 5
-      tree.insert(7);   // Subárbol derecho de 5
-      tree.insert(12);  // Subárbol izquierdo de 15
-      tree.insert(17);  // Subárbol derecho de 15
+      tree.insert(5); // Hijo izquierdo
+      tree.insert(15); // Hijo derecho
+      tree.insert(3); // Subárbol izquierdo de 5
+      tree.insert(7); // Subárbol derecho de 5
+      tree.insert(12); // Subárbol izquierdo de 15
+      tree.insert(17); // Subárbol derecho de 15
       assertEquals(7, tree.size());
     }
   }
@@ -390,7 +399,7 @@ class BinarySearchTreeTest {
     void depthOfTreeWithLeftSubtreeExpected2() throws BinarySearchTreeException {
       // Árbol con un nodo raíz y un hijo izquierdo, la profundidad será 2
       tree.insert(10);
-      tree.insert(5);  // Hijo izquierdo
+      tree.insert(5); // Hijo izquierdo
       assertEquals(2, tree.depth());
     }
 
@@ -399,7 +408,7 @@ class BinarySearchTreeTest {
     void depthOfTreeWithRightSubtreeExpected2() throws BinarySearchTreeException {
       // Árbol con un nodo raíz y un hijo derecho, la profundidad será 2
       tree.insert(10);
-      tree.insert(15);  // Hijo derecho
+      tree.insert(15); // Hijo derecho
       assertEquals(2, tree.depth());
     }
 
@@ -408,8 +417,8 @@ class BinarySearchTreeTest {
     void depthOfBalancedTreeExpected3() throws BinarySearchTreeException {
       // Árbol con raíz, hijo izquierdo y derecho. Profundidad será 3
       tree.insert(10);
-      tree.insert(5);   // Hijo izquierdo
-      tree.insert(15);  // Hijo derecho
+      tree.insert(5); // Hijo izquierdo
+      tree.insert(15); // Hijo derecho
       assertEquals(2, tree.depth());
     }
 
@@ -418,10 +427,10 @@ class BinarySearchTreeTest {
     void depthOfLeftLeaningTreeExpected5() throws BinarySearchTreeException {
       // Árbol completamente desbalanceado a la izquierda, profundidad será 5
       tree.insert(10);
-      tree.insert(5);    // Hijo izquierdo
-      tree.insert(3);    // Hijo izquierdo del hijo izquierdo
-      tree.insert(2);    // Hijo izquierdo del hijo izquierdo
-      tree.insert(1);    // Hijo izquierdo del hijo izquierdo
+      tree.insert(5); // Hijo izquierdo
+      tree.insert(3); // Hijo izquierdo del hijo izquierdo
+      tree.insert(2); // Hijo izquierdo del hijo izquierdo
+      tree.insert(1); // Hijo izquierdo del hijo izquierdo
       assertEquals(5, tree.depth());
     }
 
@@ -430,24 +439,25 @@ class BinarySearchTreeTest {
     void depthOfRightLeaningTreeExpected5() throws BinarySearchTreeException {
       // Árbol completamente desbalanceado a la derecha, profundidad será 5
       tree.insert(10);
-      tree.insert(15);   // Hijo derecho
-      tree.insert(20);   // Hijo derecho del hijo derecho
-      tree.insert(25);   // Hijo derecho del hijo derecho
-      tree.insert(30);   // Hijo derecho del hijo derecho
+      tree.insert(15); // Hijo derecho
+      tree.insert(20); // Hijo derecho del hijo derecho
+      tree.insert(25); // Hijo derecho del hijo derecho
+      tree.insert(30); // Hijo derecho del hijo derecho
       assertEquals(5, tree.depth());
     }
 
     @Test
     @DisplayName("Depth of a larger tree")
     void depthOfLargeTreeExpected4() throws BinarySearchTreeException {
-      // Árbol con 7 nodos distribuidos entre subárbol izquierdo y derecho. La profundidad será 4
+      // Árbol con 7 nodos distribuidos entre subárbol izquierdo y derecho. La
+      // profundidad será 4
       tree.insert(10);
-      tree.insert(5);    // Hijo izquierdo
-      tree.insert(15);   // Hijo derecho
-      tree.insert(3);    // Hijo izquierdo del hijo izquierdo
-      tree.insert(7);    // Hijo derecho del hijo izquierdo
-      tree.insert(12);   // Hijo izquierdo del hijo derecho
-      tree.insert(17);   // Hijo derecho del hijo derecho
+      tree.insert(5); // Hijo izquierdo
+      tree.insert(15); // Hijo derecho
+      tree.insert(3); // Hijo izquierdo del hijo izquierdo
+      tree.insert(7); // Hijo derecho del hijo izquierdo
+      tree.insert(12); // Hijo izquierdo del hijo derecho
+      tree.insert(17); // Hijo derecho del hijo derecho
       assertEquals(3, tree.depth());
     }
   }
@@ -457,11 +467,29 @@ class BinarySearchTreeTest {
   class RemoveValueTests {
 
     @Test
+    @DisplayName("Removing a null value throws an exception")
+    void removeNullValueThrowsException() {
+      // Intentamos eliminar un valor nulo
+      assertThrows(BinarySearchTreeException.class, () -> tree.removeValue(null));
+    }
+
+    @Test
     @DisplayName("Trying to remove a non-existent value throws an exception")
     void removeNonExistentValueThrowsException() {
       // Intentamos eliminar un valor que no existe en el árbol
       tree.insert(10);
       assertThrows(BinarySearchTreeException.class, () -> tree.removeValue(5));
+    }
+
+    @Test
+    @DisplayName("Remove value with no left children")
+    void removeValueWithNoLeftChildren() throws BinarySearchTreeException {
+      // Eliminar un valor que no tiene hijos izquierdos
+      tree.insert(10);
+      tree.insert(15); // Nodo derecho
+      tree.insert(20); // Nodo derecho del nodo derecho
+      tree.removeValue(15); // Eliminar el nodo 15, que no tiene hijos izquierdos
+      assertEquals("10(,20)", tree.render()); // Comprobamos la estructura después de la eliminación
     }
 
     @Test
@@ -475,14 +503,14 @@ class BinarySearchTreeTest {
     }
 
     @Test
-    @DisplayName("Removing a node with only a right child (root node)")
-    void removeNodeWithOnlyRightChild() throws BinarySearchTreeException {
-      // Eliminar un nodo con un solo hijo a la derecha (raíz)
+    @DisplayName("Removing a leaf node (not root node)")
+    void removeLeafNodeNotRoot() throws BinarySearchTreeException {
+      // Eliminar un nodo hoja que no es la raíz
       tree.insert(10);
-      tree.insert(5);   // Nodo izquierdo
-      tree.insert(15);  // Nodo derecho
-      tree.removeValue(10);  // Eliminar la raíz, que tiene un hijo derecho
-      assertEquals("15(5,)", tree.render()); // Comprobamos la estructura después de la eliminación
+      tree.insert(5); // Nodo izquierdo
+      tree.insert(15); // Nodo derecho
+      tree.removeValue(5); // Eliminar el nodo hoja (5)
+      assertEquals("10(,15)", tree.render()); // Comprobamos la estructura después de la eliminación
     }
 
     @Test
@@ -490,9 +518,91 @@ class BinarySearchTreeTest {
     void removeNodeWithOnlyLeftChild() throws BinarySearchTreeException {
       // Eliminar un nodo con un solo hijo a la izquierda (raíz)
       tree.insert(10);
-      tree.insert(5);   // Nodo izquierdo
-      tree.removeValue(10);  // Eliminar la raíz, que tiene un hijo izquierdo
+      tree.insert(5); // Nodo izquierdo
+      tree.removeValue(10); // Eliminar la raíz, que tiene un hijo izquierdo
       assertEquals("5", tree.render()); // Comprobamos la estructura después de la eliminación
+    }
+
+    @Test
+    @DisplayName("Eliminar nodo con solo hijo derecho")
+    void removeNodeWithOnlyRightChild() throws BinarySearchTreeException {
+      tree.insert(10);
+      tree.insert(15); // Nodo derecho
+      tree.removeValue(10); // Eliminar la raíz con un solo hijo derecho
+      assertEquals("15", tree.render());
+    }
+
+    @Test
+    @DisplayName("Eliminar nodo con solo hijo derecho siendo hijo izquierdo del padre")
+    void removeLeftNodeWithOnlyRightChild() throws BinarySearchTreeException {
+      tree.insert(20);
+      tree.insert(10);
+      tree.insert(15); // Hijo derecho de 10
+
+      tree.removeValue(10); // Eliminar 10, su hijo 15 debe ocupar su lugar
+
+      assertEquals("20(15,)", tree.render()); // Suponiendo que render() muestre la estructura
+    }
+
+    @Test
+    @DisplayName("Eliminar nodo con solo hijo izquierdo siendo hijo izquierdo del padre")
+    void removeLeftNodeWithOnlyLeftChild() throws BinarySearchTreeException {
+      tree.insert(20);
+      tree.insert(10);
+      tree.insert(5); // Hijo izquierdo de 10
+
+      tree.removeValue(10); // Eliminar 10, su hijo 5 debe ocupar su lugar
+
+      assertEquals("20(5,)", tree.render()); // Suponiendo que render() muestre la estructura
+    }
+
+    @Test
+    @DisplayName("Eliminar nodo con solo hijo izquierdo siendo hijo derecho del padre")
+    void removeRightNodeWithOnlyLeftChild() throws BinarySearchTreeException {
+      tree.insert(20);
+      tree.insert(30);
+      tree.insert(25); // Hijo izquierdo de 30
+
+      tree.removeValue(30); // Eliminar 30, su hijo 25 debe ocupar su lugar
+
+      assertEquals("20(,25)", tree.render()); // Suponiendo que render() muestre la estructura
+    }
+
+    @Test
+    @DisplayName("Eliminar nodo con dos hijos (sucesor es hijo izquierdo del nodo derecho)")
+    void removeNodeWithTwoChildrenSuccessorIsLeftChild() throws BinarySearchTreeException {
+      tree.insert(20);
+      tree.insert(10);
+      tree.insert(30);
+      tree.insert(25); // Sucesor in-order de 20 (menor de los mayores)
+      tree.insert(27); // Hijo derecho del sucesor
+
+      tree.removeValue(20); // 25 reemplaza a 20 y 27 se reubica
+
+      assertEquals("25(10,30(27,))", tree.render()); // Suponiendo que render() representa el árbol correctamente
+    }
+
+    @Test
+    @DisplayName("Eliminar nodo con dos hijos (sucesor es hijo derecho inmediato)")
+    void removeNodeWithTwoChildrenSuccessorIsRightChild() throws BinarySearchTreeException {
+      tree.insert(20);
+      tree.insert(10);
+      tree.insert(30);
+      tree.insert(25);
+      tree.insert(40);
+
+      tree.removeValue(20); // 25 reemplaza a 20, y el sucesorParent (20) debe apuntar a 30.
+
+      assertEquals("25(10,30(,40))", tree.render());
+    }
+
+    @Test
+    @DisplayName("Eliminar nodo con solo hijo izquierdo")
+    void removeValueLeftChildWithNoLeafs() throws BinarySearchTreeException {
+      tree.insert(10);
+      tree.insert(5); // Nodo izquierdo
+      tree.removeValue(10); // Eliminar la raíz con un solo hijo izquierdo
+      assertEquals("5", tree.render());
     }
 
     @Test
@@ -502,7 +612,7 @@ class BinarySearchTreeTest {
       tree.insert(10);
       tree.insert(5);
       tree.insert(15);
-      tree.removeValue(5);  // Eliminar el nodo 5, que tiene dos hijos (3 y 7)
+      tree.removeValue(5); // Eliminar el nodo 5, que tiene dos hijos (3 y 7)
       assertEquals("10(,15)", tree.render()); // El nodo 5 debe ser eliminado y el árbol reorganizado
     }
 
@@ -511,9 +621,9 @@ class BinarySearchTreeTest {
     void removeValueInLeftSubtree() throws BinarySearchTreeException {
       // Eliminar un nodo en el subárbol izquierdo
       tree.insert(10);
-      tree.insert(5);    // Hijo izquierdo
-      tree.insert(15);   // Hijo derecho
-      tree.removeValue(5);  // Eliminar un nodo del subárbol izquierdo
+      tree.insert(5); // Hijo izquierdo
+      tree.insert(15); // Hijo derecho
+      tree.removeValue(5); // Eliminar un nodo del subárbol izquierdo
       assertEquals("10(,15)", tree.render()); // El árbol debería tener solo la raíz y el hijo derecho
     }
 
@@ -522,9 +632,9 @@ class BinarySearchTreeTest {
     void removeValueInRightSubtree() throws BinarySearchTreeException {
       // Eliminar un nodo en el subárbol derecho
       tree.insert(10);
-      tree.insert(5);    // Hijo izquierdo
-      tree.insert(15);   // Hijo derecho
-      tree.removeValue(15);  // Eliminar un nodo del subárbol derecho
+      tree.insert(5); // Hijo izquierdo
+      tree.insert(15); // Hijo derecho
+      tree.removeValue(15); // Eliminar un nodo del subárbol derecho
       assertEquals("10(5,)", tree.render()); // El árbol debería tener solo la raíz y el hijo izquierdo
     }
 
@@ -534,9 +644,9 @@ class BinarySearchTreeTest {
       tree.insert(10);
       tree.insert(5);
       tree.insert(15);
-      tree.insert(12);  // Nodo en el subárbol derecho con un hijo izquierdo
+      tree.insert(12); // Nodo en el subárbol derecho con un hijo izquierdo
 
-      tree.removeValue(10);  // Eliminar la raíz, que tiene dos hijos
+      tree.removeValue(10); // Eliminar la raíz, que tiene dos hijos
 
       // El sucesor será el mínimo valor en el subárbol derecho
       assertEquals("12(5,15)", tree.render());
@@ -548,9 +658,9 @@ class BinarySearchTreeTest {
       tree.insert(10);
       tree.insert(5);
       tree.insert(15);
-      tree.insert(12);  // Nodo en el subárbol derecho con un hijo izquierdo
+      tree.insert(12); // Nodo en el subárbol derecho con un hijo izquierdo
 
-      tree.removeValue(12);  // Eliminar el nodo 12, el mínimo valor en el subárbol derecho
+      tree.removeValue(12); // Eliminar el nodo 12, el mínimo valor en el subárbol derecho
 
       // El árbol debe quedar reorganizado sin el nodo 12
       assertEquals("10(5,15)", tree.render());
@@ -564,19 +674,52 @@ class BinarySearchTreeTest {
     }
   }
 
-
-
-    @Nested
-    @DisplayName("Balance Tests")
-    class BalanceTests {
-      @Test
-      @DisplayName("Balance an unbalanced tree")
-      void balanceUnbalancedTree1051Expected510() throws BinarySearchTreeException {
-        tree.insert(10);
-        tree.insert(5);
-        tree.insert(1);
-        tree.balance();
-        assertEquals("5(1,10)", tree.render());
-      }
+  @Nested
+  @DisplayName("InOrder Tests")
+  class InOrderTests {
+    @Test
+    @DisplayName("InOrder traversal of an empty tree")
+    void inOrderTraversalOfEmptyTreeExpectedEmptyString() {
+      ArrayList<Integer> expected = new ArrayList<>();
+      assertEquals(expected, tree.inOrder());
     }
+
+    @Test
+    @DisplayName("InOrder traversal of a single node tree")
+    void inOrderTraversalOfSingleNodeTreeExpected10() throws BinarySearchTreeException {
+      tree.insert(10);
+      ArrayList<Integer> expected = new ArrayList<>();
+      expected.add(10);
+      assertEquals(expected, tree.inOrder());
+    }
+
+    @Test
+    @DisplayName("InOrder traversal of a multi-node tree")
+    void inOrderTraversalOfMultiNodeTreeExpected1357() throws BinarySearchTreeException {
+      tree.insert(5);
+      tree.insert(1);
+      tree.insert(3);
+      tree.insert(7);
+      ArrayList<Integer> expected = new ArrayList<>();
+      expected.add(1);
+      expected.add(3);
+      expected.add(5);
+      expected.add(7);
+      assertEquals(expected, tree.inOrder());
+    }
+  }
+
+  @Nested
+  @DisplayName("Balance Tests")
+  class BalanceTests {
+    @Test
+    @DisplayName("Balance an unbalanced tree")
+    void balanceUnbalancedTree1051Expected510() throws BinarySearchTreeException {
+      tree.insert(10);
+      tree.insert(5);
+      tree.insert(1);
+      tree.balance();
+      assertEquals("5(1,10)", tree.render());
+    }
+  }
 }

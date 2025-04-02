@@ -120,20 +120,23 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
 
   @Override
   public void removeBranch(T value) throws BinarySearchTreeException {
+
+    if (this.value == null) {
+      throw new BinarySearchTreeException("Arbol nulo");
+    }
+
     if (!this.contains(value)) {
       throw new BinarySearchTreeException("No se encuentra el valor a eliminar");
     }
 
-    if (this.value != null) {
-      if (left != null && comparator.compare(value, this.left.value) == 0) {
-        this.left = null;
-      } else if (right != null && comparator.compare(value, this.right.value) == 0) {
-        this.right = null;
-      } else if (left != null && comparator.compare(value, this.left.value) < 0) {
-        this.left.removeBranch(value);
-      } else if (right != null && comparator.compare(value, this.right.value) > 0) {
-        this.right.removeBranch(value);
-      }
+    if (left != null && comparator.compare(value, this.left.value) == 0) {
+      this.left = null;
+    } else if (right != null && comparator.compare(value, this.right.value) == 0) {
+      this.right = null;
+    } else if (left != null && comparator.compare(value, this.left.value) < 0) {
+      this.left.removeBranch(value);
+    } else if (right != null && comparator.compare(value, this.right.value) > 0) {
+      this.right.removeBranch(value);
     }
   }
 
@@ -179,50 +182,73 @@ public class BinarySearchTree<T> implements BinarySearchTreeStructure<T> {
   @Override
   public void removeValue(T value) throws BinarySearchTreeException {
     if (this.value == null) {
-      throw new BinarySearchTreeException("Árbol vacío");
-    }
-    if(!this.contains(value)) {
-      throw new BinarySearchTreeException("Valor nulo");
+      throw new BinarySearchTreeException("El árbol está vacío.");
     }
 
-    int comparator = this.comparator.compare(value, this.value);
-    if (comparator == 0) {
+    BinarySearchTree<T> parent = null;
+    BinarySearchTree<T> current = this;
 
-      if (this.left == null && this.right == null) {
-        this.value = null;
-      }
-      else if (this.left == null) {
-        this.value = this.right.value;
-        this.left = this.right.left;
-        this.right = this.right.right;
-      } else if (this.right == null) {
-        this.value = this.left.value;
-        this.right = this.left.right;
-        this.left = this.left.left;
-      }
-      else {
-        T minRightSubtree = this.right.minimum();
-        this.value = minRightSubtree;
-        this.right.removeValue(minRightSubtree);
+    while (current != null) {
+      int cmp = comparator.compare(value, current.value);
+      if (cmp < 0) {
+        parent = current;
+        current = current.left;
+      } else if (cmp > 0) {
+        parent = current;
+        current = current.right;
+      } else {
+        // Caso 1: Nodo hoja
+        if (current.left == null && current.right == null) {
+          if (parent == null) {
+            this.value = null;
+            this.left = null;
+            this.right = null;
+          } else if (parent.left == current) {
+            parent.left = null;
+          } else {
+            parent.right = null;
+          }
+        }
+        // Caso 2: Nodo con un solo hijo
+        else if (current.left == null) {
+          if (parent == null) {
+            this.value = current.right.value;
+            this.left = current.right.left;
+            this.right = current.right.right;
+          } else if (parent.left == current) {
+            parent.left = current.right;
+          } else {
+            parent.right = current.right;
+          }
+        } else if (current.right == null) {
+          if (parent == null) {
+            this.value = current.left.value;
+            this.right = current.left.right;
+            this.left = current.left.left;
+          } else if (parent.left == current) {
+            parent.left = current.left;
+          } else {
+            parent.right = current.left;
+          }
+        }
+        // Caso 3: Nodo con dos hijos
+        else {
+          BinarySearchTree<T> successorParent = current;
+          BinarySearchTree<T> successor = current.right;
+          while (successor.left != null) {
+            successorParent = successor;
+            successor = successor.left;
+          }
+          current.value = successor.value;
+          if (successorParent.left == successor) {
+            successorParent.left = successor.right;
+          }
+        }
+        return;
       }
     }
-    if (comparator < 0 && this.left != null) {
-
-      BinarySearchTree<T> i = this.left;
-      if (this.left.comparator.compare(this.left.value, value) == 0) {
-        this.left = null;
-      }
-      i.removeValue(value);
-    } else if (comparator > 0 && this.right != null) {
-      BinarySearchTree<T> i = this.right;
-
-      if (this.right.comparator.compare(this.right.value, value) == 0) {
-        this.right = null;
-      }
-      i.removeValue(value);
-    }
+    throw new BinarySearchTreeException("Valor no encontrado en el árbol.");
   }
-
 
   @Override
   public List<T> inOrder() {
