@@ -54,10 +54,11 @@ public class RonQI2Silver extends RonQI2 {
         .average()
         .orElse(0.0);
 
+    // ERROR: El if devuelve valores contrarios
     if (avgP >= thresholdP && avgS > thresholdS) {
-      resultado = false;
-    } else {
       resultado = true;
+    } else {
+      resultado = false;
     }
     return resultado;
   }
