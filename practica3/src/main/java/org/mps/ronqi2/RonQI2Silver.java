@@ -29,7 +29,7 @@ public class RonQI2Silver extends RonQI2 {
     if (lecturasP.size() > numLecturas) {
       lecturasP.remove(0);
     }
-    lecturasS.add(disp.leerSensorPresion());
+    lecturasS.add(disp.leerSensorSonido()); // ERROR, ponia leer presion
     if (lecturasS.size() > numLecturas) {
       lecturasS.remove(0);
     }
