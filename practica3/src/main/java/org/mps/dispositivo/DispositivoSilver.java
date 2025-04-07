@@ -1,3 +1,5 @@
+// Miguel Angel Dorado Maldonado
+// Salma Boulgna Moreno
 package org.mps.dispositivo;
 
 public class DispositivoSilver extends Dispositivo {

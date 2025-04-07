@@ -1,3 +1,5 @@
+// Miguel Angel Dorado Maldonado
+// Salma Boulgna Moreno
 package org.mps.ronqi2;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -6,14 +8,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.jupiter.params.provider.ValueSources;
 import org.mps.dispositivo.Dispositivo;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
 public class ronQI2SilverTest {
 

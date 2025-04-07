@@ -1,3 +1,5 @@
+// Miguel Angel Dorado Maldonado
+// Salma Boulgna Moreno
 package org.mps.ronqi2;
 
 import org.mps.dispositivo.Dispositivo;
