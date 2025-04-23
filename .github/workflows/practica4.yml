@@ -1,12 +1,12 @@
-name: Maven Practica3
+name: Maven Practica4
 
 on:
   push:
     paths:
-      - "practica3/**"
+      - "practica4/**"
   pull_request:
     paths:
-      - "practica3/**"
+      - "practica4/**"
 
 jobs:
   build:
@@ -22,4 +22,4 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-        working-directory: ./practica3
+        working-directory: ./practica4
