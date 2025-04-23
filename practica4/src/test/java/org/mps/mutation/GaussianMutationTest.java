@@ -1,74 +1,67 @@
 package org.mps.mutation;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 import org.mps.EvolutionaryAlgorithmException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * GaussianMutationTest
- */
 public class GaussianMutationTest {
+
   @Test
+  @DisplayName("Debería lanzar excepción si el individuo es null")
   public void shouldThrowExceptionWhenIndividualIsNull() {
-    // Arrange
     GaussianMutation mutation = new GaussianMutation(1.0, 1.0);
     int[] individual = null;
-
-    // Act & Assert
     assertThrows(EvolutionaryAlgorithmException.class, () -> mutation.mutate(individual));
   }
+
   @Test
-  public void shouldCreateConstructor(){
+  @DisplayName("Debería crearse correctamente usando el constructor por defecto")
+  public void shouldCreateConstructor() {
     GaussianMutation mutation = new GaussianMutation();
     assertNotNull(mutation);
   }
+
   @Test
+  @DisplayName("Debería mutar un array de un solo elemento si la tasa de mutación es 1")
   public void shouldMutateSingleElementArrayIfRateIsOne() throws EvolutionaryAlgorithmException {
-    // Arrange
     GaussianMutation mutation = new GaussianMutation(1.0, 1.0);
     int[] individual = {10};
-
-    // Act
     int[] result = mutation.mutate(individual);
-
-    // Assert
     assertEquals(1, result.length);
-    // El valor puede cambiar, no podemos asegurar el número, pero sí que no lance error
   }
 
   @Test
+  @DisplayName("No debería mutar el array si la tasa de mutación es 0")
   public void shouldNotMutateArrayWhenMutationRateIsZero() throws EvolutionaryAlgorithmException {
-    // Arrange
     GaussianMutation mutation = new GaussianMutation(0.0, 1.0);
     int[] individual = {1, 2, 3};
-
-    // Act
     int[] result = mutation.mutate(individual);
-
-    // Assert
     assertArrayEquals(individual, result);
   }
+
   @Test
+  @DisplayName("Debería lanzar excepción si se intenta mutar un array null con el constructor por defecto")
   public void shouldThrowExceptionWhenMutationRateIsNull() throws EvolutionaryAlgorithmException {
     assertThrows(EvolutionaryAlgorithmException.class, () -> new GaussianMutation().mutate(null));
   }
+
   @Test
+  @DisplayName("Debería lanzar excepción si el array a mutar está vacío")
   public void shouldThrowExceptionWhenMutationRateIsEmpty() throws EvolutionaryAlgorithmException {
     GaussianMutation mutation = new GaussianMutation();
     int[] individual = {};
     assertThrows(EvolutionaryAlgorithmException.class, () -> mutation.mutate(individual));
   }
+
   @Test
+  @DisplayName("Debería mutar al menos un elemento cuando la tasa de mutación es 1")
   public void shouldPossiblyMutateElementsWhenRateIsOne() throws EvolutionaryAlgorithmException {
-    // Arrange
     GaussianMutation mutation = new GaussianMutation(1.0, 1.0);
     int[] individual = {0, 0, 0};
-
-    // Act
     int[] result = mutation.mutate(individual);
 
-    // Assert
     boolean hasChanged = false;
     for (int i = 0; i < individual.length; i++) {
       if (result[i] != 0) {
