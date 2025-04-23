@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mps.EvolutionaryAlgorithmException;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -82,6 +80,7 @@ public class TournamentSelectionTest {
     assertEquals(population.length, newSelection.length);
   }
 
+  @Test
   @DisplayName("Select returned genes exist in initial array")
   public void tournamentSelectionReturnedGenesExpextToBeInInitalArray() throws EvolutionaryAlgorithmException {
     int tournamentSize = 5;
