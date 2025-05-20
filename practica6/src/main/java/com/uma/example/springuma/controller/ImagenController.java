@@ -20,57 +20,54 @@ import com.uma.example.springuma.model.Paciente;
 
 @RestController
 public class ImagenController {
-    @Autowired
-    private ImagenService imagenService;
+  @Autowired
+  private ImagenService imagenService;
 
-	@GetMapping("/imagen/{id}")
-	public ResponseEntity<?> downloadImage(@PathVariable long id){
-		byte[] imageData=imagenService.downloadImage(id);
-		return ResponseEntity.ok()
+  @GetMapping("/imagen/{id}")
+  public ResponseEntity<?> downloadImage(@PathVariable long id) {
+    byte[] imageData = imagenService.downloadImage(id);
+    return ResponseEntity.ok()
         .contentType(MediaType.valueOf(
-            "image/png"
-        ))
+            "image/png"))
         .body(imageData);
-	}
+  }
 
-    @GetMapping("/imagen/info/{id}")
-    public Imagen getImagen(@PathVariable("id") Long id){
-        return imagenService.getImagen(id);
+  @GetMapping("/imagen/info/{id}")
+  public Imagen getImagen(@PathVariable("id") Long id) {
+    return imagenService.getImagen(id);
+  }
+
+  @GetMapping("/imagen/predict/{id}")
+  public ResponseEntity<?> getImagenPrediction(@PathVariable("id") Long id) {
+    try {
+      return ResponseEntity.ok(imagenService.getNewPrediccion(id));
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.internalServerError().body("Error al realizar la prediccion" + e.getMessage());
     }
 
-    @GetMapping("/imagen/predict/{id}")
-    public ResponseEntity<?>  getImagenPrediction(@PathVariable("id") Long id){
-        try{
-            return ResponseEntity.ok(imagenService.getNewPrediccion(id));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body("Error al realizar la prediccion"+e.getMessage());
-        }
-        
-    }
- 
-	@PostMapping(value ="/imagen",     consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE} )
-	public ResponseEntity<?> uploadImage(@RequestPart("image") MultipartFile file,
-            @RequestPart("paciente") Paciente paciente) throws IOException {
-		String uploadImage = imagenService.uploadImage(file, paciente);
-		return ResponseEntity.ok(uploadImage);
-	}
+  }
 
-    @GetMapping("/imagen/paciente/{id}")
-    public List<Imagen> getImagenes (@PathVariable("id") Long id) {
-        return imagenService.getImagenesPaciente(id);
-    }
+  @PostMapping(value = "/imagen", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
+  public ResponseEntity<?> uploadImage(@RequestPart("image") MultipartFile file,
+      @RequestPart("paciente") Paciente paciente) throws IOException {
+    String uploadImage = imagenService.uploadImage(file, paciente);
+    return ResponseEntity.ok(uploadImage);
+  }
 
-    @DeleteMapping("/imagen/{id}")
-    public ResponseEntity<?> deleteCuenta(@PathVariable("id") Long id) {
-        try{
-            imagenService.removeImagenByID(id);
-            return ResponseEntity.noContent().build();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body("Error al eliminar la imagen");
-        }
+  @GetMapping("/imagen/paciente/{id}")
+  public List<Imagen> getImagenes(@PathVariable("id") Long id) {
+    return imagenService.getImagenesPaciente(id);
+  }
+
+  @DeleteMapping("/imagen/{id}")
+  public ResponseEntity<?> deleteCuenta(@PathVariable("id") Long id) {
+    try {
+      imagenService.removeImagenByID(id);
+      return ResponseEntity.noContent().build();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.internalServerError().body("Error al eliminar la imagen");
     }
+  }
 }

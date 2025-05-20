@@ -14,79 +14,76 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Informe {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
 
-    @Column(name = "prediccion")
-    private String prediccion;
+  @Column(name = "prediccion")
+  private String prediccion;
 
-    @Column(name = "contenido", columnDefinition = "TEXT")
-    private String contenido;
+  @Column(name = "contenido", columnDefinition = "TEXT")
+  private String contenido;
 
-    // Relación con imagen (muchas imágenes pueden pertenecer a un informe)
-    @ManyToOne()
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "imagen_id")
-    private Imagen imagen;
+  // Relación con imagen (muchas imágenes pueden pertenecer a un informe)
+  @ManyToOne()
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  @JoinColumn(name = "imagen_id")
+  private Imagen imagen;
 
-    public long getId() {
-        return id;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public Imagen getImagen() {
-        return imagen;
-    }
+  public Imagen getImagen() {
+    return imagen;
+  }
 
-    public void setImagen(Imagen id) {
-        this.imagen = id;
-    }
+  public void setImagen(Imagen id) {
+    this.imagen = id;
+  }
 
-    public String getPrediccion() {
-        return prediccion;
-    }
+  public String getPrediccion() {
+    return prediccion;
+  }
 
-    public void setPrediccion(String prediccion) {
-        this.prediccion = prediccion;
-    }
+  public void setPrediccion(String prediccion) {
+    this.prediccion = prediccion;
+  }
 
-    public String getContenido() {
-        return contenido;
-    }
+  public String getContenido() {
+    return contenido;
+  }
 
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
-    }
+  public void setContenido(String contenido) {
+    this.contenido = contenido;
+  }
 
-    public Informe() {
-        // Constructor vacío necesario para JPA
-    }
+  public Informe() {
+    // Constructor vacío necesario para JPA
+  }
 
-    public Informe(String prediccion, String contenido, Imagen imagen) {
-        this.prediccion = prediccion;
-        this.contenido = contenido;
-        this.imagen = imagen;
-    }
+  public Informe(String prediccion, String contenido, Imagen imagen) {
+    this.prediccion = prediccion;
+    this.contenido = contenido;
+    this.imagen = imagen;
+  }
 
-    public boolean equals(Object obj)
-    {
-	    return (obj instanceof Informe) && ((Informe) obj).getContenido()==this.contenido;
-    }
+  public boolean equals(Object obj) {
+    return (obj instanceof Informe) && ((Informe) obj).getContenido() == this.contenido;
+  }
 
-    public int hashCode()
-    {
-	    return this.contenido.hashCode();
-    }
-    
-    public String toString()
-    {
-	    return "Predicción = " + this.prediccion + "; " + " Contenido = " + this.contenido + " imagen = " + this.imagen ;    
-    }
+  public int hashCode() {
+    return this.contenido.hashCode();
+  }
+
+  public String toString() {
+    return "Predicción = " + this.prediccion + "; " + " Contenido = " + this.contenido + " imagen = " + this.imagen;
+  }
 }
