@@ -18,57 +18,54 @@ import com.uma.example.springuma.model.PacienteService;
 
 @RestController
 public class PacienteController {
-    
-    @Autowired
-    private PacienteService pacienteService;
-    
-    @GetMapping("/paciente/{id}")
-    public Paciente getPaciente(@PathVariable("id") Long id) {
-        return pacienteService.getPaciente(id);
-    }
 
-    @GetMapping("/paciente/medico/{id}")
-    public List<Paciente> getPacientes(@PathVariable("id") Long id) {
-        return pacienteService.getPacientesMedico(id);
-    }
+  @Autowired
+  private PacienteService pacienteService;
 
-    @PostMapping(value = "/paciente",     consumes = {MediaType.APPLICATION_JSON_VALUE} )
-	public ResponseEntity<?> savePaciente(@RequestBody Paciente paciente) {
-        try{
-            pacienteService.addPaciente(paciente);
-            return ResponseEntity.status(201).build();
-        }
-        catch(Exception e){
-            return ResponseEntity.internalServerError().body("El paciente ya existe");
-        }
-	}
+  @GetMapping("/paciente/{id}")
+  public Paciente getPaciente(@PathVariable("id") Long id) {
+    return pacienteService.getPaciente(id);
+  }
 
-    @PutMapping(value = "/paciente",     consumes = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<?> updateCuenta (@RequestBody Paciente paciente) {
-        try{
-            pacienteService.updatePaciente(paciente);
-            return ResponseEntity.noContent().build();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body("Error al actualizar el paciente ");
-        }
-    }
+  @GetMapping("/paciente/medico/{id}")
+  public List<Paciente> getPacientes(@PathVariable("id") Long id) {
+    return pacienteService.getPacientesMedico(id);
+  }
 
-    @DeleteMapping("/paciente/{id}")
-    public ResponseEntity<?> deleteCuenta(@PathVariable("id") Long id) {
-        try{
-            Paciente paciente = pacienteService.getPaciente(id);
-            System.out.println(paciente);
-            if (paciente != null) {
-                pacienteService.removePaciente(paciente);
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.internalServerError().build();
-            }
-        }
-        catch(Exception e){
-            return ResponseEntity.internalServerError().build();
-        }
+  @PostMapping(value = "/paciente", consumes = { MediaType.APPLICATION_JSON_VALUE })
+  public ResponseEntity<?> savePaciente(@RequestBody Paciente paciente) {
+    try {
+      pacienteService.addPaciente(paciente);
+      return ResponseEntity.status(201).build();
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError().body("El paciente ya existe");
     }
+  }
+
+  @PutMapping(value = "/paciente", consumes = { MediaType.APPLICATION_JSON_VALUE })
+  public ResponseEntity<?> updateCuenta(@RequestBody Paciente paciente) {
+    try {
+      pacienteService.updatePaciente(paciente);
+      return ResponseEntity.noContent().build();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.internalServerError().body("Error al actualizar el paciente ");
+    }
+  }
+
+  @DeleteMapping("/paciente/{id}")
+  public ResponseEntity<?> deleteCuenta(@PathVariable("id") Long id) {
+    try {
+      Paciente paciente = pacienteService.getPaciente(id);
+      System.out.println(paciente);
+      if (paciente != null) {
+        pacienteService.removePaciente(paciente);
+        return ResponseEntity.ok().build();
+      } else {
+        return ResponseEntity.internalServerError().build();
+      }
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError().build();
+    }
+  }
 }
