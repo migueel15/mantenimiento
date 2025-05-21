@@ -11,6 +11,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
@@ -21,6 +22,7 @@ import com.uma.example.springuma.model.Paciente;
 import jakarta.annotation.PostConstruct;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class ImagenControllerWebTestClientIT {
 
   @LocalServerPort
@@ -62,9 +64,9 @@ public class ImagenControllerWebTestClientIT {
   @Test
   @DisplayName("Subida de imagen funciona correctamente")
   public void subirImagenRetornaEventoCreado201() throws Exception {
-
+    //
     // Creamos un medico
-    Medico medico = createMedico(1L, "12345678X", "Josemi", "Neurologo");
+    Medico medico = createMedico(1L, "11111111X", "Josemi", "Neurologo");
     client.post().uri("/medico")
         .contentType(MediaType.APPLICATION_JSON)
         .bodyValue(medico)
@@ -73,7 +75,8 @@ public class ImagenControllerWebTestClientIT {
         .isCreated();
 
     // Creamos un paciente
-    Paciente paciente = createPaciente(1L, "87654321Y", "NicoKW", "01/01/25", medico, 36);
+    Paciente paciente = createPaciente(1L, "22222222B", "NicoKW", "01/01/25",
+        medico, 36);
     client.post().uri("/paciente")
         .contentType(MediaType.APPLICATION_JSON)
         .bodyValue(paciente)
@@ -81,13 +84,14 @@ public class ImagenControllerWebTestClientIT {
         .expectStatus()
         .isCreated();
 
-    // Subimos la imagen
+    // // Subimos la imagen
     File imagen = new File("./src/test/resources/healthy.png");
     String pacienteSerializado = objectMapper.writeValueAsString(paciente);
     MultipartBodyBuilder builder = new MultipartBodyBuilder();
 
     builder.part("image", new FileSystemResource(imagen));
-    builder.part("paciente", pacienteSerializado).header("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+    builder.part("paciente", pacienteSerializado).header("Content-Type",
+        MediaType.APPLICATION_JSON_VALUE);
 
     client.post().uri("/imagen")
         .contentType(MediaType.MULTIPART_FORM_DATA)
@@ -97,23 +101,23 @@ public class ImagenControllerWebTestClientIT {
         .is2xxSuccessful()
         .expectBody()
         .jsonPath("$.response").isEqualTo("file uploaded successfully : healthy.png");
-
   }
 
   @Test
   @DisplayName("Solicitud de prediccion sobre imagen")
   public void solicitarPrediccionDeImagenEsperaStatusYScore() throws Exception {
     // Creamos medico
-    Medico medico = createMedico(1L, "12345678X", "Josemi", "Neurologo");
+    Medico medico = createMedico(1L, "1111111X", "Josemi", "Neurologo");
     client.post().uri("/medico")
         .contentType(MediaType.APPLICATION_JSON)
         .bodyValue(medico)
         .exchange()
         .expectStatus()
         .isCreated();
-
+    //
     // Creamos paciente
-    Paciente paciente = createPaciente(1L, "87654321Y", "NicoKW", "01/01/25", medico, 36);
+    Paciente paciente = createPaciente(1L, "2222222B", "NicoKW", "01/01/25",
+        medico, 36);
     client.post().uri("/paciente")
         .contentType(MediaType.APPLICATION_JSON)
         .bodyValue(paciente)
@@ -121,15 +125,14 @@ public class ImagenControllerWebTestClientIT {
         .expectStatus()
         .isCreated();
 
-    // Subimos la imagen
     File imagen = new File("./src/test/resources/healthy.png");
     String pacienteSerializado = objectMapper.writeValueAsString(paciente);
     MultipartBodyBuilder builder = new MultipartBodyBuilder();
 
     builder.part("image", new FileSystemResource(imagen));
-    builder.part("paciente", pacienteSerializado).header("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+    builder.part("paciente", pacienteSerializado).header("Content-Type",
+        MediaType.APPLICATION_JSON_VALUE);
 
-    // Creamos imagen asociada al paciente
     client.post().uri("/imagen")
         .contentType(MediaType.MULTIPART_FORM_DATA)
         .body(BodyInserters.fromMultipartData(builder.build()))
@@ -139,7 +142,7 @@ public class ImagenControllerWebTestClientIT {
         .expectBody()
         .jsonPath("$.response").isEqualTo("file uploaded successfully : healthy.png");
 
-    // Solicitamos la prediccion de la imagen (id 1)
+    // Solicitamos la prediccion de la imagen (id 2)
     Long imagenId = 1L;
     client.get().uri("/imagen/predict/" + imagenId)
         .exchange()
@@ -153,7 +156,7 @@ public class ImagenControllerWebTestClientIT {
             throw new AssertionError("Not expected status for prediction");
           }
         });
-
+    //
   }
 
 }
