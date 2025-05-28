@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "k6": "^0.0.0"
+  },
+  "type": "module",
+  "name": "practica7",
+  "version": "1.0.0",
+  "main": "stressTest.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
