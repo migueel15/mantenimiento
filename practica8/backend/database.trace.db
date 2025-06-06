@@ -22,3 +22,7 @@ The connection was not closed by the application and is garbage collected [90018
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 16 more
+2025-06-06 10:41:47.603165+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM MEDICO MEDICO [*]IMAGEN"
+Syntax error in SQL statement "SELECT * FROM MEDICO MEDICO [*]IMAGEN"; SQL statement:
+SELECT * FROM MEDICO MEDICO IMAGEN [42000-224]
